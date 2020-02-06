@@ -22,6 +22,14 @@ class SteamUsers(object):
         return self.steam.GetSteamID()
 
 
+    def GetAuthSessionTicket(self) -> str:
+        """Get user's Auth Session Ticket.
+
+        :return: str
+        """
+        return self.steam.GetAuthSessionTicket()
+
+
     def LoggedOn(self) -> bool:
         """Check, true/false, if user is logged into Steam currently
 

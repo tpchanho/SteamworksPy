@@ -215,6 +215,9 @@ STEAMWORKS_METHODS = {
     'GetSteamID': {
         'restype': c_uint64
     },
+    'GetAuthSessionTicket': {
+        'restype': c_char_p
+    },
     'LoggedOn': {
         'restype': bool
     },

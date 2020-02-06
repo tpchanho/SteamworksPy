@@ -21,6 +21,8 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 //-----------------------------------------------
 // Definitions
@@ -918,6 +920,24 @@ SW_PY uint64_t GetSteamID() {
     }
     CSteamID steamID = SteamUser()->GetSteamID();
     return steamID.ConvertToUint64();
+}
+
+// Get user's Auth Session Ticket
+SW_PY const char *GetAuthSessionTicket() {
+    if (SteamUser() == NULL) {
+        return "";
+    }
+    static uint8 steamticket_[1024];
+    static uint32 steamticket_size = 0;
+    static HAuthTicket steamticket_handle_;
+    steamticket_handle_ = SteamUser()->GetAuthSessionTicket(steamticket_, sizeof(steamticket_), &steamticket_size);
+    std::stringstream ss;
+    ss << std::hex << std::setfill('0');
+    for (int i=0;i<steamticket_size;i++)
+    {
+        ss << std::hex << std::setw(2) << static_cast<int>(steamticket_[i]);
+    }
+    return strdup(ss.str().c_str());
 }
 
 // Check, true/false, if user is logged into Steam currently.
